@@ -181,7 +181,7 @@ const Attendance = () => {
   }
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-14 mx-14">Attendance</h1>
+      <h1 className="text-3xl font-bold mt-14 mx-14">Điểm danh</h1>
       <Table month={a} year={b} />
       <Table month={c} year={d} />
       <Table month={e} year={f} />
