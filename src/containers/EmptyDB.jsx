@@ -16,45 +16,29 @@ import { ToastContainer, toast } from "react-toastify";
 const EmptyDB = () => {
   const emptyDB = async () => {
     try {
-      const snapshot = await getDocs(collection(db, "employees"));
-      snapshot.docs.forEach(async (item) => {
+      (await getDocs(collection(db, "lecturer"))).docs.forEach(async (item) => {
+        await deleteDoc(item.ref);
+      });
+      (await getDocs(collection(db, "student"))).docs.forEach(async (item) => {
         await deleteDoc(item.ref);
       });
     } catch (error) {
       console.error("Error emptying the database:", error);
     }
-    let q = query(collection(db, "utils"), where("id", "==", 1));
-
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.size > 0) {
-      const firstDoc = querySnapshot.docs[0];
-
-      await updateDoc(doc(db, "utils", firstDoc.id), {
-        ...firstDoc.data(),
-        currentFingerprintId: 1,
-        isEmptying: true,
-        isGettingFingerprint: false,
-        isGotten: false,
-      });
-    }
   };
 
   const addTestDB = async () => {
-    data.forEach((emp) => {
-      console.log(emp);
-    });
     data.forEach(async (emp) => {
-      await addDoc(collection(db, "employees"), {
+      await addDoc(collection(db, "student"), {
         id: emp.id,
         name: emp.name,
-        fingerprintId: emp.fingerprintId,
-        attendance: emp.attendance || {},
-        email: emp.email,
-        phoneNumber: emp.phoneNumber,
-        address: emp.address,
-        image: emp.image,
+        uid: emp.uid,
       });
+    });
+    await addDoc(collection(db, "lecturer"), {
+      id: "GV001",
+      name: "Thầy Ahihi",
+      uid: "q3 y6 u8 i9",
     });
   };
 

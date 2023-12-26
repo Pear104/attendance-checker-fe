@@ -5,14 +5,13 @@ import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB2tn3jIGm5ephjtMLjTs1ePNS5lCw8cm8",
-  authDomain: "test-firebase-dca9f.firebaseapp.com",
-  databaseURL: "https://test-firebase-dca9f-default-rtdb.firebaseio.com",
-  projectId: "test-firebase-dca9f",
-  storageBucket: "test-firebase-dca9f.appspot.com",
-  messagingSenderId: "229724685050",
-  appId: "1:229724685050:web:b1477fe57c041a9d323f43",
-  measurementId: "G-8SC737FXR0",
+  apiKey: "AIzaSyC0KXzWCGKwrr2eb-dcE1m-8oS6k5hiZ3g",
+  authDomain: "rfid-23e43.firebaseapp.com",
+  projectId: "rfid-23e43",
+  storageBucket: "rfid-23e43.appspot.com",
+  messagingSenderId: "290776495920",
+  appId: "1:290776495920:web:180a284deaa3cdc6647af5",
+  measurementId: "G-LW0PPPZVW0",
 };
 // Initialize Firebase
 

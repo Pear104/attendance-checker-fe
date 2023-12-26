@@ -1,30 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  orderBy,
-} from "firebase/firestore";
-import { db } from "../firebase";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-const Table = ({ month, year }) => {
-  const [employees, setEmployees] = useState([]);
-
-  const fetchData = async () => {
-    const employeeData = (
-      await getDocs(query(collection(db, "employees"), orderBy("id")))
-    ).docs.map((doc) => {
-      return doc.data();
-    });
-    setEmployees(employeeData);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const Table = ({ month, year, employees }) => {
   const rows = [];
   const have30days = [4, 6, 9, 11];
   let days;
@@ -91,68 +68,13 @@ const Table = ({ month, year }) => {
   );
 };
 
-const InOutTable = ({ date, employees }) => {
-  let rows = [];
-  employees.forEach((emp, index) => {
-    if (emp.attendance[date]) {
-      let cols = [];
-      cols.push(<th className="border border-black px-2">{index + 1}</th>);
-      cols.push(<th className="border border-black px-2">{emp.id}</th>);
-      cols.push(<th className="border border-black px-2">{emp.name}</th>);
-
-      for (let i = 0; i < 16; i++) {
-        cols.push(
-          <td className="border border-black px-2">
-            {emp.attendance[date][i] || ""}
-          </td>
-        );
-      }
-      rows.push(<tr>{cols}</tr>);
-    }
-  });
-  return (
-    <div>
-      <table className="">
-        <thead>
-          <tr>
-            <th className="border border-black px-2">STT</th>
-            <th className="border border-black px-2">ID</th>
-            <th className="border border-black px-2">Name</th>
-            <th className="border border-black px-2">In 1</th>
-            <th className="border border-black px-2">Out 1</th>
-            <th className="border border-black px-2">In 2</th>
-            <th className="border border-black px-2">Out 2</th>
-            <th className="border border-black px-2">In 3</th>
-            <th className="border border-black px-2">Out 3</th>
-            <th className="border border-black px-2">In 4</th>
-            <th className="border border-black px-2">Out 4</th>
-            <th className="border border-black px-2">In 5</th>
-            <th className="border border-black px-2">Out 5</th>
-            <th className="border border-black px-2">In 6</th>
-            <th className="border border-black px-2">Out 6</th>
-            <th className="border border-black px-2">In 7</th>
-            <th className="border border-black px-2">Out 7</th>
-            <th className="border border-black px-2">In 8</th>
-            <th className="border border-black px-2">Out 8</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    </div>
-  );
-};
-
 const Attendance = () => {
   const [employees, setEmployees] = useState([]);
-  const [date, setDate] = useState("");
 
   const fetchData = async () => {
-    const employeeData = (
-      await getDocs(query(collection(db, "employees"), orderBy("id")))
-    ).docs.map((doc) => {
-      return doc.data();
-    });
-    setEmployees(employeeData);
+    const data = (await axios.get("https://rfid-server.vercel.app/student/all"))
+      .data;
+    setEmployees(data);
   };
 
   useEffect(() => {
@@ -182,28 +104,9 @@ const Attendance = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mt-14 mx-14">Điểm danh</h1>
-      <Table month={a} year={b} />
-      <Table month={c} year={d} />
-      <Table month={e} year={f} />
-      <div className="mx-14">
-        <h1 className="text-3xl font-bold mb-3">Tra cứu lịch sử ra vào</h1>
-        <input
-          className="mb-3"
-          type="date"
-          name=""
-          id=""
-          onChange={(e) => {
-            setDate(
-              `${e.target.value.slice(8, 10)}/${e.target.value.slice(
-                5,
-                7
-              )}/${e.target.value.slice(0, 4)}`
-            );
-          }}
-        />
-        {date && <InOutTable date={date} employees={employees} />}
-        <div className="h-40"></div>
-      </div>
+      <Table month={a} year={b} employees={employees} />
+      <Table month={c} year={d} employees={employees} />
+      <Table month={e} year={f} employees={employees} />
     </div>
   );
 };

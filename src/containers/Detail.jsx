@@ -163,9 +163,6 @@ const Table = ({ employees, month, year, setModal, setModalContent }) => {
             Export
           </CSVLink>
         </h1>
-
-        {/* <button className="bg-green-600 mb-3 text-white px-4 py-2 rounded font-bold hover:bg-green-700"> */}
-        {/* </button> */}
         <table>
           <thead>
             <tr>
@@ -295,11 +292,6 @@ const Modal = ({ modal, setModal, employee, month, year }) => {
                 <span className="font-bold">name: </span> {employee.name}
               </h1>
               <br />
-              <h1 className="inline-block pr-3">
-                <span className="font-bold">fingerprintId: </span>{" "}
-                {employee.fingerprintId}
-              </h1>
-              <br />
               {keys.map((field) => {
                 return (
                   field != "id" &&
@@ -342,7 +334,7 @@ const Detail = () => {
 
   const fetchData = async () => {
     const employeeData = (
-      await getDocs(query(collection(db, "employees"), orderBy("id")))
+      await getDocs(query(collection(db, "student"), orderBy("id")))
     ).docs.map((doc) => doc.data());
     setEmployees(employeeData);
   };

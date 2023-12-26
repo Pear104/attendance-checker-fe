@@ -18,8 +18,8 @@ function App() {
         <Route path="/attendance" element={<Attendance />} />
         {/* <Route path="/manage" element={<Manage />} /> */}
         <Route path="/register" element={<Register />} />
-        <Route path="/update" element={<Update />} />
-        <Route path="/delete" element={<Delete />} />
+        {/* <Route path="/update" element={<Update />} /> */}
+        {/* <Route path="/delete" element={<Delete />} /> */}
         <Route path="/detail" element={<Detail />} />
         <Route path="/emptydb" element={<EmptyDB />} />
       </Routes>
